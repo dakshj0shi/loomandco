@@ -3,11 +3,26 @@ import ProductCard from "@/components/ProductCard";
 import { Container } from "@/components/ui";
 import { categories, products } from "@/lib/products";
 
-export const metadata = { title: "Shop" };
-
 type ShopPageProps = {
   searchParams: Promise<{ c?: string | string[] }>;
 };
+
+/**
+ * Canonical always points at the unfiltered /shop — category chips are a
+ * client-side filter, not distinct content, so they shouldn't compete with
+ * the base page for search ranking.
+ */
+export async function generateMetadata({ searchParams }: ShopPageProps) {
+  const { c } = await searchParams;
+  const active = typeof c === "string" && categories.includes(c) ? c : undefined;
+  return {
+    title: active ?? "Shop",
+    description: active
+      ? `Shop Loom & Co. ${active.toLowerCase()} — handwoven on traditional looms in India.`
+      : "The full Loom & Co. collection: handwoven bedsheets, comforters and cushions.",
+    alternates: { canonical: "/shop" },
+  };
+}
 
 export default async function Shop({ searchParams }: ShopPageProps) {
   const { c } = await searchParams;

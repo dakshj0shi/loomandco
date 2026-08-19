@@ -1,6 +1,10 @@
 import SimplePage from "@/components/SimplePage";
 
-export const metadata = { title: "Journal" };
+export const metadata = {
+  title: "Journal",
+  description: "Notes on the looms, the weavers and the cloth behind Loom & Co.",
+  alternates: { canonical: "/journal" },
+};
 
 export default function JournalPage() {
   return (

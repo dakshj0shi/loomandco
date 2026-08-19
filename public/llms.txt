@@ -1,0 +1,19 @@
+# Loom & Co.
+
+> Handwoven bedsheets, comforters and cushions from artisan looms in India. Considered, unfussy, and made to be used rather than saved for guests.
+
+Loom & Co. is an online-only home textiles brand. Every product is woven on traditional handlooms by artisan weavers in India — no power looms.
+
+## Site
+
+- [Home](https://loomandco.com/): brand overview, trending products, shop-by-category
+- [Shop](https://loomandco.com/shop): the full catalogue — Bedsheets, Cushions, Comforters
+- [About Us](https://loomandco.com/about): the handloom story
+- [FAQs](https://loomandco.com/faqs): sizing, colour, care, shipping
+
+## Policies
+
+- [Terms & Conditions](https://loomandco.com/terms)
+- [Privacy Policy](https://loomandco.com/privacy)
+- [Return & Refund Policy](https://loomandco.com/returns)
+- [Shipping & Delivery Policy](https://loomandco.com/shipping)

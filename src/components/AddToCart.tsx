@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { Check } from "lucide-react";
+import { useEffect, useState } from "react";
 import { useCart } from "@/lib/cart";
 import type { Product } from "@/lib/products";
 
@@ -15,8 +16,15 @@ export default function AddToCart({
   const cart = useCart();
   const sizes = withSizes ? product.sizes : undefined;
   const [size, setSize] = useState(sizes?.[0]);
+  const [justAdded, setJustAdded] = useState(false);
 
-  const add = () =>
+  useEffect(() => {
+    if (!justAdded) return;
+    const t = window.setTimeout(() => setJustAdded(false), 1400);
+    return () => window.clearTimeout(t);
+  }, [justAdded]);
+
+  const add = () => {
     cart.add({
       slug: product.slug,
       name: product.name,
@@ -24,6 +32,8 @@ export default function AddToCart({
       tone: product.tone,
       size,
     });
+    setJustAdded(true);
+  };
 
   return (
     <div className="space-y-4">
@@ -45,9 +55,15 @@ export default function AddToCart({
 
       <button
         onClick={add}
-        className="w-full bg-ink py-3 text-[12px] uppercase tracking-[0.16em] text-paper hover:bg-clay"
+        className="flex w-full items-center justify-center gap-2 bg-ink py-3 text-[12px] uppercase tracking-[0.16em] text-paper hover:bg-clay"
       >
-        Add to cart
+        {justAdded ? (
+          <>
+            <Check size={14} strokeWidth={2} /> Added
+          </>
+        ) : (
+          "Add to cart"
+        )}
       </button>
     </div>
   );

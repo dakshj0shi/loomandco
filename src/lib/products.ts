@@ -10,6 +10,9 @@ export const site = {
   announcement: "Complimentary delivery on orders over 200 EUR",
   currency: "EUR",
   email: "hello@loomandco.com",
+  /** Placeholder — swap for the real production domain once one exists; every
+   *  canonical URL, the sitemap and JSON-LD are built from this. */
+  url: "https://loomandco.com",
 };
 
 export type Product = {

@@ -1,6 +1,10 @@
 import SimplePage from "@/components/SimplePage";
 
-export const metadata = { title: "Terms & Conditions" };
+export const metadata = {
+  title: "Terms & Conditions",
+  description: "The terms that govern using the Loom & Co. website and placing an order.",
+  alternates: { canonical: "/terms" },
+};
 
 export default function TermsPage() {
   return (

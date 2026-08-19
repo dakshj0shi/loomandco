@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { Heart, Search, ShoppingBag, User } from "lucide-react";
 import { useState } from "react";
@@ -8,7 +7,7 @@ import { nav, site } from "@/lib/products";
 import { useCart } from "@/lib/cart";
 import { useWishlist } from "@/lib/wishlist";
 
-export default function Header() {
+export default function Header({ logo }: { logo: React.ReactNode }) {
   const [menu, setMenu] = useState(false);
   const cart = useCart();
   const wishlist = useWishlist();
@@ -29,16 +28,8 @@ export default function Header() {
             <Bars />
           </button>
 
-          {/* Falls back to the type lockup until /public/logo/loom-black.png is added. */}
-          <Link href="/" className="flex items-center">
-            <Image
-              src="/logo/loom-black.png"
-              alt={site.brand}
-              width={140}
-              height={28}
-              className="h-6 w-auto md:h-7"
-              priority
-            />
+          <Link href="/" className="flex items-center" aria-label={`${site.brand} — home`}>
+            {logo}
           </Link>
 
           {/* Desktop nav. The megamenu is pure CSS hover, no state to get stuck. */}
@@ -81,14 +72,15 @@ export default function Header() {
           </nav>
 
           <div className="ml-auto flex items-center gap-4">
-            <Link href="/shop" aria-label="Search" className="hidden hover:opacity-70 sm:block">
+            <Link href="/shop" aria-label="Search" title="Search" className="hidden hover:opacity-70 sm:block">
               <Search size={18} strokeWidth={1.5} />
             </Link>
-            <Link href="/shop" aria-label="Account" className="hidden hover:opacity-70 sm:block">
+            <Link href="/shop" aria-label="Account" title="Account" className="hidden hover:opacity-70 sm:block">
               <User size={18} strokeWidth={1.5} />
             </Link>
             <button
               aria-label={`Wishlist (${wishlist.count})`}
+              title="Wishlist"
               onClick={() => wishlist.setOpen(true)}
               className="relative hover:opacity-70"
             >
@@ -101,6 +93,7 @@ export default function Header() {
             </button>
             <button
               aria-label={`Cart (${cart.count})`}
+              title="Cart"
               onClick={() => cart.setOpen(true)}
               className="relative hover:opacity-70"
             >

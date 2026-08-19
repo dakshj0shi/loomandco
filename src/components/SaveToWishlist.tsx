@@ -5,7 +5,8 @@ import { useWishlist } from "@/lib/wishlist";
 import { useToast } from "@/lib/toast";
 import type { Product } from "@/lib/products";
 
-export default function WishlistButton({ product }: { product: Product }) {
+/** Text-style wishlist toggle for the product detail page, next to Add to cart. */
+export default function SaveToWishlist({ product }: { product: Product }) {
   const wishlist = useWishlist();
   const toast = useToast();
   const saved = wishlist.has(product.slug);
@@ -13,18 +14,15 @@ export default function WishlistButton({ product }: { product: Product }) {
   return (
     <button
       type="button"
-      aria-label={saved ? "Remove from wishlist" : "Add to wishlist"}
       aria-pressed={saved}
-      title={saved ? "Remove from wishlist" : "Add to wishlist"}
-      onClick={(e) => {
-        e.preventDefault();
-        e.stopPropagation();
+      onClick={() => {
         wishlist.toggle({ slug: product.slug, name: product.name, price: product.price, tone: product.tone });
         toast.show(saved ? "Removed from wishlist" : "Added to wishlist");
       }}
-      className="absolute right-3 top-3 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-paper/90 text-ink"
+      className="flex w-full items-center justify-center gap-2 border border-ink py-3 text-[12px] uppercase tracking-[0.16em] hover:bg-ink hover:text-paper"
     >
-      <Heart size={15} strokeWidth={1.5} fill={saved ? "currentColor" : "none"} />
+      <Heart size={14} strokeWidth={1.5} fill={saved ? "currentColor" : "none"} />
+      {saved ? "Saved" : "Save to wishlist"}
     </button>
   );
 }

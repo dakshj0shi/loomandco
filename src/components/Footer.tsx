@@ -1,6 +1,7 @@
-import Image from "next/image";
 import Link from "next/link";
 import { Container } from "./ui";
+import Logo from "./Logo";
+import NewsletterForm from "./NewsletterForm";
 import { footerLinks, site } from "@/lib/products";
 
 export default function Footer() {
@@ -9,30 +10,12 @@ export default function Footer() {
       <Container className="py-16">
         <div className="grid gap-10 md:grid-cols-[1.3fr_1fr_1fr]">
           <div className="max-w-sm">
-            {/* Falls back to a blank slot until /public/logo/loom-white.png is added. */}
-            <Image
-              src="/logo/loom-white.png"
-              alt={site.brand}
-              width={160}
-              height={32}
-              className="h-7 w-auto"
-            />
+            <Logo variant="white" className="h-7 w-auto" />
             <p className="mt-2 text-[11px] uppercase tracking-[0.3em] text-paper/60">
               {site.tagline}
             </p>
             <p className="mt-5 text-paper/70">{site.description}</p>
-            <form className="mt-6 flex border-b border-paper/40">
-              <input
-                type="email"
-                required
-                placeholder="Email address"
-                aria-label="Email address"
-                className="w-full bg-transparent py-2 text-[13px] text-paper outline-none placeholder:text-paper/50"
-              />
-              <button className="shrink-0 py-2 text-[11px] uppercase tracking-[0.16em]">
-                Sign up
-              </button>
-            </form>
+            <NewsletterForm />
           </div>
 
           <div>

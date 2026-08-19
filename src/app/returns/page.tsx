@@ -1,6 +1,10 @@
 import SimplePage from "@/components/SimplePage";
 
-export const metadata = { title: "Return & Refund Policy" };
+export const metadata = {
+  title: "Return & Refund Policy",
+  description: "Thirty nights to decide on bedsheets and comforters, fourteen days on cushions — how returns and refunds work at Loom & Co.",
+  alternates: { canonical: "/returns" },
+};
 
 export default function ReturnsPage() {
   return (

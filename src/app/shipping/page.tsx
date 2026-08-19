@@ -1,7 +1,11 @@
 import SimplePage from "@/components/SimplePage";
 import { site } from "@/lib/products";
 
-export const metadata = { title: "Shipping & Delivery Policy" };
+export const metadata = {
+  title: "Shipping & Delivery Policy",
+  description: "Delivery times, rates and international shipping details for Loom & Co. orders.",
+  alternates: { canonical: "/shipping" },
+};
 
 export default function ShippingPage() {
   return (

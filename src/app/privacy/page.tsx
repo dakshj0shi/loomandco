@@ -1,7 +1,11 @@
 import SimplePage from "@/components/SimplePage";
 import { site } from "@/lib/products";
 
-export const metadata = { title: "Privacy Policy" };
+export const metadata = {
+  title: "Privacy Policy",
+  description: "How Loom & Co. collects, stores and uses customer data.",
+  alternates: { canonical: "/privacy" },
+};
 
 export default function PrivacyPage() {
   return (

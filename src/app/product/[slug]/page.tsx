@@ -2,8 +2,9 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import AddToCart from "@/components/AddToCart";
 import ProductCard from "@/components/ProductCard";
-import { Container, Eyebrow, Shot, price } from "@/components/ui";
-import { bySlug, products, specs } from "@/lib/products";
+import SaveToWishlist from "@/components/SaveToWishlist";
+import { Container, Eyebrow, Shot, imageUrlFor, price } from "@/components/ui";
+import { bySlug, products, site, specs } from "@/lib/products";
 
 export function generateStaticParams() {
   return products.map((p) => ({ slug: p.slug }));
@@ -15,7 +16,13 @@ type ProductPageProps = {
 
 export async function generateMetadata({ params }: ProductPageProps) {
   const p = bySlug((await params).slug);
-  return { title: p?.name ?? "Product" };
+  if (!p) return { title: "Product" };
+  return {
+    title: p.name,
+    description: p.blurb,
+    alternates: { canonical: `/product/${p.slug}` },
+    openGraph: { title: p.name, description: p.blurb, images: imageUrlFor(p.slug) ? [imageUrlFor(p.slug)!] : undefined },
+  };
 }
 
 export default async function ProductPage({ params }: ProductPageProps) {
@@ -23,9 +30,30 @@ export default async function ProductPage({ params }: ProductPageProps) {
   if (!p) notFound();
 
   const related = products.filter((r) => r.category === p.category && r.slug !== p.slug).slice(0, 4);
+  const image = imageUrlFor(p.slug);
+  const productJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: p.name,
+    description: p.blurb,
+    category: p.category,
+    ...(image ? { image: `${site.url}${image}` } : {}),
+    brand: { "@type": "Brand", name: site.brand },
+    offers: {
+      "@type": "AggregateOffer",
+      priceCurrency: site.currency,
+      lowPrice: p.price,
+      highPrice: p.priceMax ?? p.price,
+      availability: "https://schema.org/InStock",
+    },
+  };
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }}
+      />
       <Container data-reveal="soft" className="py-10">
         <nav className="text-[12px] text-muted">
           <Link href="/shop" className="hover:text-ink">
@@ -53,8 +81,9 @@ export default async function ProductPage({ params }: ProductPageProps) {
             <p className="mt-3 text-lg">{price(p)}</p>
             <p className="mt-5 max-w-md text-muted">{p.blurb}</p>
 
-            <div className="mt-8 max-w-xs">
+            <div className="mt-8 max-w-xs space-y-3">
               <AddToCart product={p} withSizes />
+              <SaveToWishlist product={p} />
             </div>
 
             <dl className="mt-10 space-y-3 border-t border-line pt-6 text-[13px]">

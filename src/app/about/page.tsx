@@ -1,6 +1,11 @@
 import SimplePage from "@/components/SimplePage";
 
-export const metadata = { title: "About Us" };
+export const metadata = {
+  title: "About Us",
+  description:
+    "Loom & Co. weaves bedsheets, comforters and cushions on traditional handlooms with artisan weavers in India — no power looms, no shortcuts.",
+  alternates: { canonical: "/about" },
+};
 
 export default function AboutPage() {
   return (

@@ -57,6 +57,12 @@ const images: Record<string, string> = {
   "sofa-cushion-ash": "seat-cushion-bertel-midnatt-2.jpg",
 };
 
+/** Absolute-path-ready image URL for a slug, or null if it only has a placeholder — for JSON-LD, which can't reference an art-directed CSS gradient. */
+export function imageUrlFor(slug: string): string | null {
+  const source = images[slug];
+  return source ? `${IMAGE_BASE}/${source}` : null;
+}
+
 /**
  * Uses the closest supplied textile photograph and falls back to an art-directed
  * placeholder only when no honest visual match exists. The slug is also the

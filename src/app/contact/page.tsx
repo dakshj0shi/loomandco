@@ -1,7 +1,11 @@
 import SimplePage from "@/components/SimplePage";
 import { site } from "@/lib/products";
 
-export const metadata = { title: "Contact Us" };
+export const metadata = {
+  title: "Contact Us",
+  description: "Questions about an order, a colour or a size — reach the Loom & Co. team directly.",
+  alternates: { canonical: "/contact" },
+};
 
 export default function ContactPage() {
   return (
