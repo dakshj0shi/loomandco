@@ -1,9 +1,12 @@
 "use client";
 
 import { Check } from "lucide-react";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useEffect, useState } from "react";
 import { useCart } from "@/lib/cart";
 import type { Product } from "@/lib/products";
+
+const EASE = [0.22, 1, 0.36, 1] as const;
 
 /** Sizeless products add straight to the cart; sized ones pick a size first. */
 export default function AddToCart({
@@ -17,6 +20,7 @@ export default function AddToCart({
   const sizes = withSizes ? product.sizes : undefined;
   const [size, setSize] = useState(sizes?.[0]);
   const [justAdded, setJustAdded] = useState(false);
+  const reduceMotion = useReducedMotion();
 
   useEffect(() => {
     if (!justAdded) return;
@@ -55,15 +59,26 @@ export default function AddToCart({
 
       <button
         onClick={add}
-        className="flex w-full items-center justify-center gap-2 bg-ink py-3 text-[12px] uppercase tracking-[0.16em] text-paper hover:bg-clay"
+        className="relative flex w-full items-center justify-center gap-2 overflow-hidden bg-ink py-3 text-[12px] uppercase tracking-[0.16em] text-paper hover:bg-clay"
       >
-        {justAdded ? (
-          <>
-            <Check size={14} strokeWidth={2} /> Added
-          </>
-        ) : (
-          "Add to cart"
-        )}
+        <AnimatePresence mode="wait" initial={false}>
+          <motion.span
+            key={justAdded ? "added" : "idle"}
+            initial={reduceMotion ? false : { opacity: 0, y: 6 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={reduceMotion ? undefined : { opacity: 0, y: -6 }}
+            transition={{ duration: reduceMotion ? 0 : 0.18, ease: EASE }}
+            className="flex items-center justify-center gap-2"
+          >
+            {justAdded ? (
+              <>
+                <Check size={14} strokeWidth={2} /> Added
+              </>
+            ) : (
+              "Add to cart"
+            )}
+          </motion.span>
+        </AnimatePresence>
       </button>
     </div>
   );

@@ -1,16 +1,21 @@
 "use client";
 
 import Link from "next/link";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { Heart, Search, ShoppingBag, User } from "lucide-react";
 import { useState } from "react";
 import { nav, site } from "@/lib/products";
 import { useCart } from "@/lib/cart";
 import { useWishlist } from "@/lib/wishlist";
 
+const EASE = [0.22, 1, 0.36, 1] as const;
+
 export default function Header({ logo }: { logo: React.ReactNode }) {
   const [menu, setMenu] = useState(false);
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
   const cart = useCart();
   const wishlist = useWishlist();
+  const reduceMotion = useReducedMotion();
 
   return (
     <>
@@ -32,41 +37,72 @@ export default function Header({ logo }: { logo: React.ReactNode }) {
             {logo}
           </Link>
 
-          {/* Desktop nav. The megamenu is pure CSS hover, no state to get stuck. */}
+          {/* Desktop nav. Motion-driven megamenu: panel + columns reveal on hover/focus. */}
           <nav className="hidden lg:flex lg:items-stretch lg:self-stretch">
-            {nav.map((group) => (
-              <div key={group.label} className="group relative flex items-stretch">
+            {nav.map((group, i) => (
+              <div
+                key={group.label}
+                className="relative flex items-stretch"
+                onMouseEnter={() => setOpenIndex(i)}
+                onMouseLeave={() => setOpenIndex((cur) => (cur === i ? null : cur))}
+                onFocus={() => setOpenIndex(i)}
+                onBlur={(e) => {
+                  if (!e.currentTarget.contains(e.relatedTarget as Node)) {
+                    setOpenIndex((cur) => (cur === i ? null : cur));
+                  }
+                }}
+              >
                 <Link
                   href={group.href}
-                  className="flex items-center px-4 text-[13px] tracking-wide group-hover:underline"
+                  className={`flex items-center px-4 text-[13px] tracking-wide ${
+                    openIndex === i ? "underline" : ""
+                  }`}
                 >
                   {group.label}
                 </Link>
 
-                {group.columns.length > 0 && (
-                  <div className="invisible absolute left-0 top-full z-50 opacity-0 transition-opacity duration-150 group-hover:visible group-hover:opacity-100">
-                    <div className="min-w-[520px] border border-line bg-paper p-8 shadow-[0_18px_40px_-24px_rgba(0,0,0,0.35)]">
-                      <div className="flex gap-12">
-                        {group.columns.map((col) => (
-                          <div key={col.title}>
-                            <p className="mb-3 text-[11px] uppercase tracking-[0.18em] text-muted">
-                              {col.title}
-                            </p>
-                            <ul className="space-y-2">
-                              {col.links.map((l) => (
-                                <li key={l}>
-                                  <Link href={group.href} className="text-[13px] hover:underline">
-                                    {l}
-                                  </Link>
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
-                        ))}
+                <AnimatePresence>
+                  {group.columns.length > 0 && openIndex === i && (
+                    <motion.div
+                      initial={reduceMotion ? false : { opacity: 0, y: -6, scale: 0.98 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={reduceMotion ? undefined : { opacity: 0, y: -6, scale: 0.98 }}
+                      transition={{ duration: reduceMotion ? 0 : 0.22, ease: EASE }}
+                      style={{ transformOrigin: "top left" }}
+                      className="absolute left-0 top-full z-50"
+                    >
+                      <div className="min-w-[520px] border border-line bg-paper p-8 shadow-[0_18px_40px_-24px_rgba(0,0,0,0.35)]">
+                        <div className="flex gap-12">
+                          {group.columns.map((col, ci) => (
+                            <motion.div
+                              key={col.title}
+                              initial={reduceMotion ? false : { opacity: 0, y: 8 }}
+                              animate={{ opacity: 1, y: 0 }}
+                              transition={{
+                                duration: reduceMotion ? 0 : 0.22,
+                                delay: reduceMotion ? 0 : 0.04 + ci * 0.045,
+                                ease: EASE,
+                              }}
+                            >
+                              <p className="mb-3 text-[11px] uppercase tracking-[0.18em] text-muted">
+                                {col.title}
+                              </p>
+                              <ul className="space-y-2">
+                                {col.links.map((l) => (
+                                  <li key={l}>
+                                    <Link href={group.href} className="text-[13px] hover:underline">
+                                      {l}
+                                    </Link>
+                                  </li>
+                                ))}
+                              </ul>
+                            </motion.div>
+                          ))}
+                        </div>
                       </div>
-                    </div>
-                  </div>
-                )}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
             ))}
           </nav>
@@ -86,9 +122,15 @@ export default function Header({ logo }: { logo: React.ReactNode }) {
             >
               <Heart size={18} strokeWidth={1.5} />
               {wishlist.count > 0 && (
-                <span className="absolute -right-1.5 -top-1.5 flex h-3.5 w-3.5 items-center justify-center rounded-full bg-ink text-[9px] text-paper">
+                <motion.span
+                  key={wishlist.count}
+                  initial={reduceMotion ? false : { scale: 0.5, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  transition={{ duration: 0.25, ease: EASE }}
+                  className="absolute -right-1.5 -top-1.5 flex h-3.5 w-3.5 items-center justify-center rounded-full bg-ink text-[9px] text-paper"
+                >
                   {wishlist.count}
-                </span>
+                </motion.span>
               )}
             </button>
             <button
@@ -99,9 +141,15 @@ export default function Header({ logo }: { logo: React.ReactNode }) {
             >
               <ShoppingBag size={18} strokeWidth={1.5} />
               {cart.count > 0 && (
-                <span className="absolute -right-1.5 -top-1.5 flex h-3.5 w-3.5 items-center justify-center rounded-full bg-ink text-[9px] text-paper">
+                <motion.span
+                  key={cart.count}
+                  initial={reduceMotion ? false : { scale: 0.5, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  transition={{ duration: 0.25, ease: EASE }}
+                  className="absolute -right-1.5 -top-1.5 flex h-3.5 w-3.5 items-center justify-center rounded-full bg-ink text-[9px] text-paper"
+                >
                   {cart.count}
-                </span>
+                </motion.span>
               )}
             </button>
           </div>
