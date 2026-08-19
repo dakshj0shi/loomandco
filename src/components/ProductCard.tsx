@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Shot, price } from "./ui";
 import AddToCart from "./AddToCart";
+import WishlistButton from "./WishlistButton";
 import type { Product } from "@/lib/products";
 
 export default function ProductCard({ p }: { p: Product }) {
@@ -22,6 +23,7 @@ export default function ProductCard({ p }: { p: Product }) {
               {p.badge}
             </span>
           )}
+          <WishlistButton product={p} />
         </div>
         <h3 className="mt-3 font-sans text-[13px] group-hover:underline">{p.name}</h3>
         <p className="mt-0.5 text-[13px] text-muted">{price(p)}</p>

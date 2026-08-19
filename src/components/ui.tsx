@@ -27,49 +27,34 @@ const images: Record<string, string> = {
   // Homepage hero and editorial stories
   "hero-weave": "midnatt-bedding-ellie-blue-seersucker-11.jpg",
   "hero-detail": "paslakan-lake-midnatt-lr-g.jpg",
-  "hero-room": "sangklader-ekologisk-bomull-olivgron.2jpg.jpg",
-  "the-loom": "seat-cushions-midnatt-1.jpg",
-  "layered-bed": "midnatt-ekologisk-bomull-lake-5.jpg",
-  "collection-sleep": "checked-black-white-bedspread-midnatt.jpg",
-  "collection-gather": "sommarnojen-ruth-3.jpg",
-  "collection-bathe": "doxie-towel92.jpg",
-  "journal-stories": "hemma-hos-frida-thofeldt-midnatt-6.jpg",
-  "archive-fabrics": "midnatt-outlet.jpg",
+  "hero-room": "hemma-hos-frida-thofeldt-midnatt-6.jpg",
+  "the-loom": "hemma-hos-tessan-rado-stocksunds-vintage-midnatt-1.jpg",
+  "fastest-way-to-change-a-room": "sommarnojen-ruth-3.jpg",
+  "collection-bedsheets": "midnatt-bedding-ellie-blue-seersucker-1.jpg",
+  "collection-cushions": "seat-cushion-irene-midnatt-9.jpg",
+  "collection-comforters": "midnatt-seat-cushions-bedspread-recycled-cotton-6.jpg",
+  "journal-stories": "malin-persson-mjaumjau4.jpg",
+  "archive-fabrics": "midnatt-bedding-brie-yellos-seersucker-7.jpg",
 
-  // Tabletop editorial gallery
-  "table-cloth": "midnatt-bell-table-cloth-napkins-1.jpg",
-  "table-napkins": "midnatt-tablecloth-irene-striped-9.jpg",
-  "table-runner": "midnatt-lemon-tablecloth-.jpg",
-  "table-setting": "midnatt-pink-hearts-tablecloth-napkin-set-1.jpg",
-  "table-detail": "tessan-rado-midnatt-josefin.jpg",
-  "table-evening": "sommarnojen-ruth2.jpg",
+  // Bedsheets
+  "percale-bedsheet-set-chalk": "ellie-duvet-sheet-and-pillow-case97.jpg",
+  "percale-bedsheet-set-indigo": "midnatt-bedding-ellie-blue-seersucker-11.jpg",
+  "sateen-bedsheet-set-oat": "brie-duvet-and-pillow65-1.jpg",
+  "handloom-bedsheet-set-ash": "sangklader-ekologisk-bomull-olivgron.2jpg.jpg",
+  "percale-fitted-sheet-sage": "paslakan-lake-midnatt-lr-g.jpg",
 
-  // Bedding
-  "percale-duvet-cover-chalk": "ellie-duvet-sheet-and-pillow-case97.jpg",
-  "percale-duvet-cover-indigo": "midnatt-bedding-ellie-blue-seersucker-11.jpg",
-  "sateen-duvet-cover-oat": "brie-duvet-and-pillow65-1.jpg",
-  "percale-pillowcases-chalk": "frill-pillow-case-sorbetto-midnatt-4.jpg",
-  "percale-fitted-sheet-ash": "paslakan-lake-midnatt-lr-g.jpg",
-  "handloom-throw-madder": "sangklader-barn-baby-ekologisk-bomull-vinrott.jpg",
+  // Comforters
+  "handloom-comforter-madder": "sangklader-barn-baby-ekologisk-bomull-vinrott.jpg",
+  "quilted-comforter-chalk": "checked-black-white-bedspread-midnatt.jpg",
+  "reversible-comforter-indigo-oat": "midnatt-bedding-brie-yellos-seersucker-6.jpg",
+  "lightweight-comforter-sage": "midnatt-ekologisk-bomull-lake-5.jpg",
 
-  // Tabletop
-  "handloom-tablecloth-sage": "seat-cushions-table-cloth-simona-midnatt.jpg",
-  "hemstitched-napkins-oat": "midnatt_servetter_josefin-la-mer.jpg",
-  "table-runner-ink": "midnatt-franka-duk-bla-randig-3.jpg",
-  "quilted-placemats-clay": "midnatt-lina-huring-apertivo5.jpg",
-
-  // Bath
-  "waffle-bath-sheet-ash": "midnatt-waffle-towel-7-perlino-doxie-cielo.jpg",
-  "waffle-hand-towel-ash": "waffle-hand-towel-doxie-brown-midnatt.jpg",
-  "terry-bath-sheet-chalk": "doxie-towel92.jpg",
-  "waffle-bath-mat-ink": "waffle-hand-towel-doxie-brown-midnatt.jpg",
-
-  // Cushions, kitchen, and bags
-  "handloom-cushion-cover-indigo": "midnatt_seat-cushion_blue_1000px.jpg",
-  "handloom-cushion-cover-madder": "midnatt_seat-cushion_brown_1000px.jpg",
-  "seat-pad-oat": "midantt_seat-cushion-striped-simona.jpg",
-  "waffle-tea-towels-sage": "bluey-tablecloth-and-tuttifrutti-napkin88-1.jpg",
-  "canvas-tote-bone": "tote-bag-sam-midnatt.jpg",
+  // Cushions
+  "pillow-cushion-cover-indigo": "midnatt_seat-cushion_blue_1000px.jpg",
+  "pillow-cushion-cover-madder": "midnatt_seat-cushion_brown_1000px.jpg",
+  "pillow-cushion-cover-sage": "midantt__seat-cushion-striped-simona.jpg",
+  "sofa-cushion-oat": "seat-cushions-midnatt-1.jpg",
+  "sofa-cushion-ash": "seat-cushion-bertel-midnatt-2.jpg",
 };
 
 /**

@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { addLine, setQty, totals, type Line } from "./cartLogic";
+import { addLine, setQty, totals, type Line } from "./cartLogic.ts";
 
 const towel = { slug: "waffle-towel-rowan", name: "Waffle towel Rowan", price: 40, tone: "#a8b4ae" };
 

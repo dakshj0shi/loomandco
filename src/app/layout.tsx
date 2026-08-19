@@ -6,6 +6,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ScrollReveal from "@/components/ScrollReveal";
 import { CartProvider } from "@/lib/cart";
+import { WishlistProvider } from "@/lib/wishlist";
 import { site } from "@/lib/products";
 
 const display = Playfair_Display({
@@ -45,10 +46,12 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     <html lang="en" className={`${display.variable} ${body.variable} h-full antialiased`}>
       <body className="flex min-h-full flex-col">
         <CartProvider>
-          <ScrollReveal />
-          <Header />
-          <main className="flex-1">{children}</main>
-          <Footer />
+          <WishlistProvider>
+            <ScrollReveal />
+            <Header />
+            <main className="flex-1">{children}</main>
+            <Footer />
+          </WishlistProvider>
         </CartProvider>
       </body>
     </html>

@@ -1,27 +1,33 @@
+import Image from "next/image";
 import Link from "next/link";
 import { Container } from "./ui";
-import { nav, site } from "@/lib/products";
+import { footerLinks, site } from "@/lib/products";
 
 export default function Footer() {
   return (
-    <footer className="mt-8 border-t border-line">
+    <footer className="mt-8 bg-ink text-paper">
       <Container className="py-16">
-        <div className="grid gap-10 md:grid-cols-[1.4fr_repeat(3,1fr)]">
+        <div className="grid gap-10 md:grid-cols-[1.3fr_1fr_1fr]">
           <div className="max-w-sm">
-            <p className="font-display text-2xl font-bold leading-none tracking-[0.01em] uppercase">
-              {site.brand}
-            </p>
-            <p className="mt-2 text-[11px] uppercase tracking-[0.3em] text-muted">
+            {/* Falls back to a blank slot until /public/logo/loom-white.png is added. */}
+            <Image
+              src="/logo/loom-white.png"
+              alt={site.brand}
+              width={160}
+              height={32}
+              className="h-7 w-auto"
+            />
+            <p className="mt-2 text-[11px] uppercase tracking-[0.3em] text-paper/60">
               {site.tagline}
             </p>
-            <p className="mt-5 text-muted">{site.description}</p>
-            <form className="mt-6 flex border-b border-ink">
+            <p className="mt-5 text-paper/70">{site.description}</p>
+            <form className="mt-6 flex border-b border-paper/40">
               <input
                 type="email"
                 required
                 placeholder="Email address"
                 aria-label="Email address"
-                className="w-full bg-transparent py-2 text-[13px] outline-none placeholder:text-muted"
+                className="w-full bg-transparent py-2 text-[13px] text-paper outline-none placeholder:text-paper/50"
               />
               <button className="shrink-0 py-2 text-[11px] uppercase tracking-[0.16em]">
                 Sign up
@@ -29,35 +35,39 @@ export default function Footer() {
             </form>
           </div>
 
-          {nav
-            .filter((g) => g.columns.length > 0)
-            .slice(0, 3)
-            .map((g) => (
-              <div key={g.label}>
-                <p className="mb-3 text-[11px] uppercase tracking-[0.18em]">{g.label}</p>
-                <ul className="space-y-2">
-                  {g.columns.flatMap((c) => c.links).slice(0, 6).map((l) => (
-                    <li key={l}>
-                      <Link href="/shop" className="text-[13px] text-muted hover:text-ink">
-                        {l}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
+          <div>
+            <p className="mb-3 text-[11px] uppercase tracking-[0.18em] text-paper/60">
+              Quick Links
+            </p>
+            <ul className="space-y-2">
+              {footerLinks.quick.map((l) => (
+                <li key={l.label}>
+                  <Link href={l.href} className="text-[13px] text-paper/80 hover:text-paper">
+                    {l.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div>
+            <p className="mb-3 text-[11px] uppercase tracking-[0.18em] text-paper/60">Support</p>
+            <ul className="space-y-2">
+              {footerLinks.support.map((l) => (
+                <li key={l.label}>
+                  <Link href={l.href} className="text-[13px] text-paper/80 hover:text-paper">
+                    {l.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </Container>
 
-      <div className="border-t border-line bg-ink text-paper">
-        <Container className="flex flex-wrap items-center justify-between gap-3 py-5 text-[12px]">
-          <span>
-            © {new Date().getFullYear()} {site.brand}
-          </span>
-          <span className="text-paper/60 uppercase tracking-[0.2em]">
-            Estd {site.established}
-          </span>
-          <span className="text-paper/60">{site.email}</span>
+      <div className="border-t border-paper/15">
+        <Container className="py-5 text-center text-[12px] text-paper/70">
+          © {new Date().getFullYear()} — {site.brand}
         </Container>
       </div>
     </footer>

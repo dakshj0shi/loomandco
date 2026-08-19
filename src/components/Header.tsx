@@ -1,13 +1,17 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
+import { Heart, Search, ShoppingBag, User } from "lucide-react";
 import { useState } from "react";
 import { nav, site } from "@/lib/products";
 import { useCart } from "@/lib/cart";
+import { useWishlist } from "@/lib/wishlist";
 
 export default function Header() {
   const [menu, setMenu] = useState(false);
   const cart = useCart();
+  const wishlist = useWishlist();
 
   return (
     <>
@@ -25,12 +29,16 @@ export default function Header() {
             <Bars />
           </button>
 
-          {/* Type lockup standing in for the logo artwork — see README to swap in the file. */}
-          <Link
-            href="/"
-            className="font-display text-[22px] font-bold leading-none tracking-[0.01em] uppercase"
-          >
-            {site.brand}
+          {/* Falls back to the type lockup until /public/logo/loom-black.png is added. */}
+          <Link href="/" className="flex items-center">
+            <Image
+              src="/logo/loom-black.png"
+              alt={site.brand}
+              width={140}
+              height={28}
+              className="h-6 w-auto md:h-7"
+              priority
+            />
           </Link>
 
           {/* Desktop nav. The megamenu is pure CSS hover, no state to get stuck. */}
@@ -38,7 +46,7 @@ export default function Header() {
             {nav.map((group) => (
               <div key={group.label} className="group relative flex items-stretch">
                 <Link
-                  href="/shop"
+                  href={group.href}
                   className="flex items-center px-4 text-[13px] tracking-wide group-hover:underline"
                 >
                   {group.label}
@@ -56,7 +64,7 @@ export default function Header() {
                             <ul className="space-y-2">
                               {col.links.map((l) => (
                                 <li key={l}>
-                                  <Link href="/shop" className="text-[13px] hover:underline">
+                                  <Link href={group.href} className="text-[13px] hover:underline">
                                     {l}
                                   </Link>
                                 </li>
@@ -72,15 +80,36 @@ export default function Header() {
             ))}
           </nav>
 
-          <div className="ml-auto flex items-center gap-5 text-[13px]">
-            <Link href="/shop" className="hidden hover:underline sm:block">
-              Search
+          <div className="ml-auto flex items-center gap-4">
+            <Link href="/shop" aria-label="Search" className="hidden hover:opacity-70 sm:block">
+              <Search size={18} strokeWidth={1.5} />
             </Link>
-            <Link href="/shop" className="hidden hover:underline sm:block">
-              Login
+            <Link href="/shop" aria-label="Account" className="hidden hover:opacity-70 sm:block">
+              <User size={18} strokeWidth={1.5} />
             </Link>
-            <button onClick={() => cart.setOpen(true)} className="hover:underline">
-              Cart ({cart.count})
+            <button
+              aria-label={`Wishlist (${wishlist.count})`}
+              onClick={() => wishlist.setOpen(true)}
+              className="relative hover:opacity-70"
+            >
+              <Heart size={18} strokeWidth={1.5} />
+              {wishlist.count > 0 && (
+                <span className="absolute -right-1.5 -top-1.5 flex h-3.5 w-3.5 items-center justify-center rounded-full bg-ink text-[9px] text-paper">
+                  {wishlist.count}
+                </span>
+              )}
+            </button>
+            <button
+              aria-label={`Cart (${cart.count})`}
+              onClick={() => cart.setOpen(true)}
+              className="relative hover:opacity-70"
+            >
+              <ShoppingBag size={18} strokeWidth={1.5} />
+              {cart.count > 0 && (
+                <span className="absolute -right-1.5 -top-1.5 flex h-3.5 w-3.5 items-center justify-center rounded-full bg-ink text-[9px] text-paper">
+                  {cart.count}
+                </span>
+              )}
             </button>
           </div>
         </div>
@@ -90,11 +119,7 @@ export default function Header() {
         <ul className="space-y-5">
           {nav.map((g) => (
             <li key={g.label}>
-              <Link
-                href="/shop"
-                onClick={() => setMenu(false)}
-                className="font-display text-lg"
-              >
+              <Link href={g.href} onClick={() => setMenu(false)} className="font-display text-lg">
                 {g.label}
               </Link>
               {g.columns.length > 0 && (
@@ -102,7 +127,7 @@ export default function Header() {
                   {g.columns.flatMap((c) => c.links).map((l) => (
                     <li key={l}>
                       <Link
-                        href="/shop"
+                        href={g.href}
                         onClick={() => setMenu(false)}
                         className="text-[13px] text-muted"
                       >
@@ -115,6 +140,46 @@ export default function Header() {
             </li>
           ))}
         </ul>
+      </Panel>
+
+      <Panel
+        open={wishlist.open}
+        onClose={() => wishlist.setOpen(false)}
+        title={`Wishlist (${wishlist.count})`}
+        side="right"
+      >
+        {wishlist.items.length === 0 ? (
+          <p className="text-muted">Nothing saved yet.</p>
+        ) : (
+          <ul className="space-y-5">
+            {wishlist.items.map((item) => (
+              <li key={item.slug} className="flex gap-4">
+                <Link
+                  href={`/product/${item.slug}`}
+                  onClick={() => wishlist.setOpen(false)}
+                  className="h-20 w-16 shrink-0"
+                  style={{ backgroundColor: item.tone }}
+                />
+                <div className="flex-1">
+                  <Link
+                    href={`/product/${item.slug}`}
+                    onClick={() => wishlist.setOpen(false)}
+                    className="text-[13px] hover:underline"
+                  >
+                    {item.name}
+                  </Link>
+                  <p className="mt-1 text-[13px] text-muted">{item.price} EUR</p>
+                  <button
+                    onClick={() => wishlist.toggle(item)}
+                    className="mt-2 text-[12px] text-muted underline"
+                  >
+                    Remove
+                  </button>
+                </div>
+              </li>
+            ))}
+          </ul>
+        )}
       </Panel>
 
       <Panel
@@ -208,9 +273,9 @@ function Panel({
       />
       <aside
         aria-hidden={!open}
-        className={`fixed ${side}-0 top-0 z-50 flex h-full w-[min(90vw,380px)] flex-col bg-paper transition-transform duration-300 ${
-          open ? "translate-x-0" : side === "left" ? "-translate-x-full" : "translate-x-full"
-        }`}
+        className={`fixed top-0 z-50 flex h-full w-[min(90vw,380px)] flex-col bg-paper transition-transform duration-300 ${
+          side === "left" ? "left-0" : "right-0"
+        } ${open ? "translate-x-0" : side === "left" ? "-translate-x-full" : "translate-x-full"}`}
       >
         <div className="flex items-center justify-between border-b border-line px-5 py-4">
           <span className="text-[12px] uppercase tracking-[0.16em]">{title}</span>

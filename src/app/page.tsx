@@ -2,44 +2,45 @@ import Link from "next/link";
 import ProductRow from "@/components/ProductRow";
 import TestimonialCarousel from "@/components/TestimonialCarousel";
 import { Container, Eyebrow, Shot } from "@/components/ui";
-import { byCategory, features, products, site, usps } from "@/lib/products";
+import { features, products, site, usps } from "@/lib/products";
 
-const PICKS = [
-  "percale-duvet-cover-indigo",
-  "hemstitched-napkins-oat",
-  "handloom-tablecloth-sage",
-  "handloom-throw-madder",
-  "waffle-bath-sheet-ash",
-  "canvas-tote-bone",
-  "cotton-apron-ink",
+const TRENDING = [
+  "percale-bedsheet-set-indigo",
+  "sofa-cushion-oat",
+  "handloom-comforter-madder",
+  "pillow-cushion-cover-madder",
+  "sateen-bedsheet-set-oat",
+  "reversible-comforter-indigo-oat",
+  "pillow-cushion-cover-sage",
 ];
 
 const COLLECTIONS = [
   {
-    title: "Sleep",
-    note: "Percale, sateen and handloom layers",
-    href: "/shop?c=Bedding",
+    title: "Bedsheets",
+    note: "Percale, sateen and handloom sets in Single, Queen and King",
+    href: "/shop?c=Bedsheets",
     tone: "#aab7b2",
-    slug: "collection-sleep",
+    slug: "collection-bedsheets",
   },
   {
-    title: "Gather",
-    note: "Cloths and napkins cut for long tables",
-    href: "/shop?c=Tabletop",
+    title: "Cushions",
+    note: "Pillow covers for the bed, oversized cushions for everywhere else",
+    href: "/shop?c=Cushions",
     tone: "#b59478",
-    slug: "collection-gather",
+    slug: "collection-cushions",
   },
   {
-    title: "Bathe",
-    note: "Waffle and terry that earn their rail space",
-    href: "/shop?c=Bath",
+    title: "Comforters",
+    note: "Quilted and reversible fills for every season",
+    href: "/shop?c=Comforters",
     tone: "#8e9996",
-    slug: "collection-bathe",
+    slug: "collection-comforters",
   },
 ];
 
 export default function Home() {
-  const picks = PICKS.map((slug) => products.find((product) => product.slug === slug)!).filter(Boolean);
+  const trending = TRENDING.map((slug) => products.find((product) => product.slug === slug)!).filter(Boolean);
+  const newArrivals = products.filter((p) => p.badge === "New");
 
   return (
     <>
@@ -60,26 +61,25 @@ export default function Home() {
         </Container>
       </section>
 
-      <ProductRow
-        title="For the table"
-        intro="Hemstitched napkins, long-drop cloths and runners for ordinary suppers and crowded weekends."
-        items={byCategory("Tabletop")}
-        href="/shop?c=Tabletop"
-      />
-
-      <EditorialSplit feature={features[1]} tone="#c4a58c" slug="the-loom" />
-
-      <CollectionMosaic />
+      <EditorialSplit feature={features[0]} tone="#b08d72" slug="the-loom" />
 
       <ProductRow
-        title="The Loom & Co. edit"
-        intro="A short selection from across the collection, chosen for how naturally the pieces live together."
-        items={picks}
+        title="Trending now"
+        intro="What's moving across bedsheets, cushions and comforters this month."
+        items={trending}
       />
 
-      <TableStory />
+      <CategoryGrid />
 
-      <EditorialSplit feature={features[3]} tone="#c8c5bb" slug="layered-bed" reverse />
+      <EditorialSplit feature={features[3]} tone="#a06552" slug="fastest-way-to-change-a-room" reverse />
+
+      {newArrivals.length > 0 && (
+        <ProductRow
+          title="New arrivals"
+          intro="Just woven, just dyed."
+          items={newArrivals}
+        />
+      )}
 
       <TestimonialCarousel />
 
@@ -92,7 +92,7 @@ export default function Home() {
 
 function Hero() {
   const panels = [
-    { slug: "hero-weave", tone: "#9eaaa4", alt: "Folded Loom & Co. handloom bedding" },
+    { slug: "hero-weave", tone: "#9eaaa4", alt: "Folded Loom & Co. handloom bedsheets" },
     { slug: "hero-detail", tone: "#b98b70", alt: "Close view of the woven cotton texture" },
     { slug: "hero-room", tone: "#7d8987", alt: "Loom & Co. textiles in a quiet bedroom" },
   ];
@@ -116,7 +116,7 @@ function Hero() {
             </p>
             <h1 className="mt-4 text-5xl leading-[0.98] md:text-7xl">Woven for the everyday.</h1>
             <p className="mt-5 max-w-md text-paper/80">
-              Handwoven bed, bath and table linen from artisan looms in India—considered,
+              Handwoven bedsheets, comforters and cushions from artisan looms in India—considered,
               unfussy and meant to be used.
             </p>
             <Link
@@ -174,13 +174,14 @@ function EditorialSplit({
   );
 }
 
-function CollectionMosaic() {
+/** Society of Wanderers-style category grid: large tiles, name + "View products". */
+function CategoryGrid() {
   return (
     <section data-reveal="soft" className="bg-card py-16 md:py-20">
       <Container>
         <div className="mb-8 flex items-end justify-between gap-4">
           <div>
-            <Eyebrow>Shop by room</Eyebrow>
+            <Eyebrow>Shop by category</Eyebrow>
             <h2 className="mt-3 text-3xl md:text-[38px]">A home, in cloth</h2>
           </div>
           <Link href="/shop" className="text-[11px] uppercase tracking-[0.18em] underline underline-offset-4">
@@ -190,56 +191,26 @@ function CollectionMosaic() {
       </Container>
       <div className="grid md:grid-cols-3">
         {COLLECTIONS.map((collection) => (
-          <Link key={collection.title} href={collection.href} className="group relative block overflow-hidden">
+          <div key={collection.title} className="group relative block overflow-hidden">
             <Shot
               slug={collection.slug}
               tone={collection.tone}
               alt={`${collection.title} collection`}
               className="aspect-[4/5] w-full transition-transform duration-700 group-hover:scale-[1.015]"
             />
-            <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/65 to-transparent px-6 pb-7 pt-20 text-paper">
-              <h3 className="text-4xl">{collection.title}</h3>
+            <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent px-6 pb-7 pt-24 text-paper">
+              <h3 className="text-3xl">{collection.title}</h3>
               <p className="mt-1 text-paper/75">{collection.note}</p>
+              <Link
+                href={collection.href}
+                className="mt-4 inline-flex min-h-9 items-center bg-paper px-5 text-[11px] uppercase tracking-[0.16em] text-ink hover:bg-sand"
+              >
+                View products
+              </Link>
             </div>
-          </Link>
+          </div>
         ))}
       </div>
-    </section>
-  );
-}
-
-function TableStory() {
-  const top = ["table-cloth", "table-napkins", "table-runner"];
-  const bottom = ["table-setting", "table-detail", "table-evening"];
-  const tones = ["#9ca88d", "#c8bba4", "#876c5a", "#b17e6b", "#a8b6b7", "#81766a"];
-
-  return (
-    <section data-reveal="soft" className="border-y border-line py-16 md:py-20">
-      <Container>
-        <div className="grid grid-cols-3 gap-2 md:gap-5">
-          {top.map((slug, index) => (
-            <Shot key={slug} slug={slug} tone={tones[index]} alt="Loom & Co. tabletop editorial" className="aspect-[4/5]" />
-          ))}
-        </div>
-        <div className="mx-auto max-w-2xl py-16 text-center md:py-20">
-          <Eyebrow>The table</Eyebrow>
-          <blockquote className="mt-5 font-display text-3xl leading-[1.25] md:text-[42px]">
-            “A table is worth setting properly, even on a Tuesday.”
-          </blockquote>
-          <p className="mx-auto mt-5 max-w-lg text-muted">
-            Cloths, runners and hemstitched napkins in organic cotton, cut generously for the
-            tables people actually gather around.
-          </p>
-          <Link href="/shop?c=Tabletop" className="mt-7 inline-block border-b border-ink pb-1 text-[11px] uppercase tracking-[0.18em]">
-            Shop tabletop
-          </Link>
-        </div>
-        <div className="grid grid-cols-3 gap-2 md:gap-5">
-          {bottom.map((slug, index) => (
-            <Shot key={slug} slug={slug} tone={tones[index + 3]} alt="Loom & Co. table linen in use" className="aspect-[4/5]" />
-          ))}
-        </div>
-      </Container>
     </section>
   );
 }
@@ -269,26 +240,26 @@ function PromoTiles() {
     <section data-reveal="soft" className="py-16 md:py-20">
       <Container>
         <div className="grid gap-5 md:grid-cols-3">
-          <Link href="/shop" className="group relative block overflow-hidden">
-            <Shot slug="journal-stories" tone="#8f7868" alt="Stories from homes lived in" className="aspect-[4/5]" />
+          <Link href="/about" className="group relative block overflow-hidden">
+            <Shot slug="journal-stories" tone="#8f7868" alt="The story behind Loom & Co." className="aspect-[4/5]" />
             <span className="absolute inset-0 flex items-center justify-center p-8 text-center font-display text-4xl text-paper">
-              Read the journal
+              Our story
             </span>
           </Link>
-          <Link href="/shop" className="group relative block overflow-hidden">
-            <Shot slug="archive-fabrics" tone="#77847b" alt="Archive cloth and final colourways" className="aspect-[4/5]" />
+          <Link href="/shop?c=Comforters" className="group relative block overflow-hidden">
+            <Shot slug="archive-fabrics" tone="#77847b" alt="Comforters collection" className="aspect-[4/5]" />
             <span className="absolute inset-0 flex items-center justify-center p-8 text-center font-display text-4xl text-paper">
-              Explore the archive
+              Shop comforters
             </span>
           </Link>
           <div className="flex aspect-[4/5] flex-col items-center justify-center bg-clay p-8 text-center text-paper">
             <Eyebrow>Useful before ordering</Eyebrow>
             <h2 className="mt-4 text-4xl">What size?</h2>
             <p className="mt-5 max-w-xs text-paper/75">
-              Bedding sizes differ by country. Use our guide to find the right fit before you
-              add a layer.
+              Bedsheet and comforter sizes differ by country. Use our guide to find the right
+              fit before you order.
             </p>
-            <Link href="/shop" className="mt-7 inline-flex min-h-11 items-center border border-paper px-6 text-[11px] uppercase tracking-[0.18em] hover:bg-paper hover:text-ink">
+            <Link href="/faqs" className="mt-7 inline-flex min-h-11 items-center border border-paper px-6 text-[11px] uppercase tracking-[0.18em] hover:bg-paper hover:text-ink">
               View size guide
             </Link>
           </div>
