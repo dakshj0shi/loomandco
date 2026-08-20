@@ -121,7 +121,7 @@ function Hero() {
             </p>
             <Link
               href="/shop"
-              className="mt-7 inline-flex min-h-11 items-center bg-paper px-7 text-[11px] uppercase tracking-[0.18em] text-ink hover:bg-sand"
+              className="mt-7 inline-flex min-h-11 items-center bg-paper px-7 text-[11px] uppercase tracking-[0.18em] text-ink transition-transform hover:bg-sand active:scale-[0.98]"
             >
               Shop the collection
             </Link>
@@ -163,7 +163,7 @@ function EditorialSplit({
             <p className="mx-auto mt-5 max-w-sm text-muted">{feature.body}</p>
             <Link
               href={feature.href}
-              className="mt-7 inline-flex min-h-11 items-center border border-ink px-6 text-[11px] uppercase tracking-[0.18em] hover:bg-ink hover:text-paper"
+              className="mt-7 inline-flex min-h-11 items-center border border-ink px-6 text-[11px] uppercase tracking-[0.18em] transition-transform hover:bg-ink hover:text-paper active:scale-[0.98]"
             >
               {feature.cta}
             </Link>
@@ -203,7 +203,7 @@ function CategoryGrid() {
               <p className="mt-1 text-paper/75">{collection.note}</p>
               <Link
                 href={collection.href}
-                className="mt-4 inline-flex min-h-9 items-center bg-paper px-5 text-[11px] uppercase tracking-[0.16em] text-ink hover:bg-sand"
+                className="mt-4 inline-flex min-h-9 items-center bg-paper px-5 text-[11px] uppercase tracking-[0.16em] text-ink transition-transform hover:bg-sand active:scale-[0.98]"
               >
                 View products
               </Link>
@@ -217,16 +217,13 @@ function CategoryGrid() {
 
 function TrustRow() {
   return (
-    <section data-reveal="soft" className="border-b border-line py-16 md:py-20">
+    <section data-reveal="soft" className="border-y border-line py-10 md:py-12">
       <Container>
-        <div className="grid gap-10 text-center md:grid-cols-3">
+        <div className="grid gap-8 md:grid-cols-3 md:divide-x md:divide-line">
           {usps.map((usp, index) => (
-            <div key={usp.title} className="mx-auto max-w-xs">
-              <span className="mx-auto flex h-12 w-12 items-center justify-center rounded-full border border-line font-display text-lg">
-                0{index + 1}
-              </span>
-              <h3 className="mt-5 text-2xl">{usp.title}</h3>
-              <p className="mt-2 text-muted">{usp.body}</p>
+            <div key={usp.title} className={index === 0 ? "" : "md:pl-8"}>
+              <h3 className="font-display text-lg">{usp.title}</h3>
+              <p className="mt-1.5 text-[13px] text-muted">{usp.body}</p>
             </div>
           ))}
         </div>
@@ -239,27 +236,29 @@ function PromoTiles() {
   return (
     <section data-reveal="soft" className="py-16 md:py-20">
       <Container>
-        <div className="grid gap-5 md:grid-cols-3">
+        <div className="grid gap-5 md:grid-cols-[1.6fr_1fr]">
           <Link href="/about" className="group relative block overflow-hidden">
-            <Shot slug="journal-stories" tone="#8f7868" alt="The story behind Loom & Co." className="aspect-[4/5]" />
-            <span className="absolute inset-0 flex items-center justify-center p-8 text-center font-display text-4xl text-paper">
+            <Shot
+              slug="journal-stories"
+              tone="#8f7868"
+              alt="The story behind Loom & Co."
+              className="aspect-[4/5] w-full transition-transform duration-700 group-hover:scale-[1.015] md:aspect-auto md:h-full"
+            />
+            <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/60 to-transparent p-8 pt-20 font-display text-4xl text-paper">
               Our story
             </span>
           </Link>
-          <Link href="/shop?c=Comforters" className="group relative block overflow-hidden">
-            <Shot slug="archive-fabrics" tone="#77847b" alt="Comforters collection" className="aspect-[4/5]" />
-            <span className="absolute inset-0 flex items-center justify-center p-8 text-center font-display text-4xl text-paper">
-              Shop comforters
-            </span>
-          </Link>
-          <div className="flex aspect-[4/5] flex-col items-center justify-center bg-clay p-8 text-center text-paper">
+          <div className="flex flex-col items-start justify-center bg-clay p-8 text-paper md:p-10">
             <Eyebrow>Useful before ordering</Eyebrow>
             <h2 className="mt-4 text-4xl">What size?</h2>
             <p className="mt-5 max-w-xs text-paper/75">
               Bedsheet and comforter sizes differ by country. Use our guide to find the right
               fit before you order.
             </p>
-            <Link href="/faqs" className="mt-7 inline-flex min-h-11 items-center border border-paper px-6 text-[11px] uppercase tracking-[0.18em] hover:bg-paper hover:text-ink">
+            <Link
+              href="/faqs"
+              className="mt-7 inline-flex min-h-11 items-center border border-paper px-6 text-[11px] uppercase tracking-[0.18em] transition-transform hover:bg-paper hover:text-ink active:scale-[0.98]"
+            >
               View size guide
             </Link>
           </div>

@@ -47,7 +47,7 @@ export default function AddToCart({
             <button
               key={s}
               onClick={() => setSize(s)}
-              className={`border px-3 py-1.5 text-[12px] ${
+              className={`border px-3 py-1.5 text-[12px] active:scale-[0.96] ${
                 s === size ? "border-ink bg-ink text-paper" : "border-line hover:border-ink"
               }`}
             >
@@ -59,7 +59,7 @@ export default function AddToCart({
 
       <button
         onClick={add}
-        className="relative flex w-full items-center justify-center gap-2 overflow-hidden bg-ink py-3 text-[12px] uppercase tracking-[0.16em] text-paper hover:bg-clay"
+        className="relative flex w-full items-center justify-center gap-2 overflow-hidden bg-ink py-3 text-[12px] uppercase tracking-[0.16em] text-paper hover:bg-clay active:scale-[0.98]"
       >
         <AnimatePresence mode="wait" initial={false}>
           <motion.span

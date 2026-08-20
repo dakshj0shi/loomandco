@@ -248,7 +248,7 @@ export default function Header({ logo }: { logo: React.ReactNode }) {
                       <button
                         aria-label="Decrease quantity"
                         onClick={() => cart.setQty(i, l.qty - 1)}
-                        className="h-6 w-6 border border-line leading-none"
+                        className="h-6 w-6 border border-line leading-none hover:border-ink active:scale-[0.92]"
                       >
                         –
                       </button>
@@ -256,7 +256,7 @@ export default function Header({ logo }: { logo: React.ReactNode }) {
                       <button
                         aria-label="Increase quantity"
                         onClick={() => cart.setQty(i, l.qty + 1)}
-                        className="h-6 w-6 border border-line leading-none"
+                        className="h-6 w-6 border border-line leading-none hover:border-ink active:scale-[0.92]"
                       >
                         +
                       </button>
@@ -280,7 +280,7 @@ export default function Header({ logo }: { logo: React.ReactNode }) {
               <p className="mt-1 text-[12px] text-muted">
                 Shipping is calculated at checkout.
               </p>
-              <button className="mt-4 w-full bg-ink py-3 text-[12px] uppercase tracking-[0.16em] text-paper">
+              <button className="mt-4 w-full bg-ink py-3 text-[12px] uppercase tracking-[0.16em] text-paper hover:bg-clay active:scale-[0.98]">
                 Checkout
               </button>
             </div>
