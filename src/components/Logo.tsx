@@ -19,8 +19,13 @@ export default function Logo({
   const hasFile = existsSync(path.join(process.cwd(), "public", rel));
 
   if (hasFile) {
+    // The supplied artwork is a square canvas with the wordmark centred and
+    // padded, not a tight wordmark crop — `fill` + `object-contain` scales
+    // whatever the real aspect ratio is instead of assuming one.
     return (
-      <Image src={rel} alt={site.brand} width={140} height={28} className={className} priority />
+      <span className={`relative inline-block ${className}`}>
+        <Image src={rel} alt={site.brand} fill sizes="200px" className="object-contain" priority />
+      </span>
     );
   }
 

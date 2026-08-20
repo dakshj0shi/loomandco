@@ -85,7 +85,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
               <ScrollReveal />
               <UtmCapture />
               <ScrollProgress />
-              <Header logo={<Logo variant="black" className="h-6 w-auto md:h-7" />} />
+              <Header logo={<Logo variant="black" className="h-10 w-28 md:h-12 md:w-32" />} />
               <main className="flex-1">
                 <PageTransition>{children}</PageTransition>
               </main>
