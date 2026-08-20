@@ -7,7 +7,7 @@ export const site = {
   established: "2026",
   description:
     "Handwoven bedsheets, comforters and cushions from artisan looms in India. Considered, unfussy, and made to be used rather than saved for guests.",
-  announcement: "Complimentary delivery on orders over 200 EUR",
+  announcement: "Complimentary delivery on orders over ₹2,000",
   currency: "EUR",
   email: "hello@loomandco.com",
   /** Placeholder — swap for the real production domain once one exists; every

@@ -110,18 +110,18 @@ function Hero() {
       </div>
       <div className="absolute inset-0 flex items-end bg-gradient-to-t from-black/55 via-transparent to-transparent">
         <Container className="pb-10 md:pb-14">
-          <div className="max-w-xl text-paper">
-            <p className="text-[10px] font-medium uppercase tracking-[0.24em] text-paper/75">
+          <div className="max-w-xl bg-paper/90 px-6 py-7 text-ink shadow-[0_18px_50px_-24px_rgba(0,0,0,0.45)] backdrop-blur-[2px] md:px-8 md:py-8">
+            <p className="text-[10px] font-medium uppercase tracking-[0.24em] text-ink/70">
               The first collection · 2026
             </p>
             <h1 className="mt-4 text-5xl leading-[0.98] md:text-7xl">Woven for the everyday.</h1>
-            <p className="mt-5 max-w-md text-paper/80">
+            <p className="mt-5 max-w-md text-ink/80">
               Handwoven bedsheets, comforters and cushions from artisan looms in India—considered,
               unfussy and meant to be used.
             </p>
             <Link
               href="/shop"
-              className="mt-7 inline-flex min-h-11 items-center bg-paper px-7 text-[11px] uppercase tracking-[0.18em] text-ink transition-transform hover:bg-sand active:scale-[0.98]"
+              className="mt-7 inline-flex min-h-11 items-center bg-ink px-7 text-[11px] uppercase tracking-[0.18em] text-paper transition-transform hover:bg-clay active:scale-[0.98]"
             >
               Shop the collection
             </Link>

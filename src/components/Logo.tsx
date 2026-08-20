@@ -4,7 +4,8 @@ import Image from "next/image";
 import { site } from "@/lib/products";
 
 /**
- * Renders the real logo file the moment it exists at /public/logo/loom-<variant>.png,
+ * Renders the tightly cropped real wordmark at
+ * /public/logo/loom-<variant>-wordmark.png,
  * otherwise an inline SVG wordmark — never a broken image icon. Server-only
  * (fs.existsSync), so Header/Footer receive this as a prop rather than importing it.
  */
@@ -15,16 +16,13 @@ export default function Logo({
   variant: "black" | "white";
   className?: string;
 }) {
-  const rel = `/logo/loom-${variant}.png`;
+  const rel = `/logo/loom-${variant}-wordmark.png`;
   const hasFile = existsSync(path.join(process.cwd(), "public", rel));
 
   if (hasFile) {
-    // The supplied artwork is a square canvas with the wordmark centred and
-    // padded, not a tight wordmark crop — `fill` + `object-contain` scales
-    // whatever the real aspect ratio is instead of assuming one.
     return (
       <span className={`relative inline-block ${className}`}>
-        <Image src={rel} alt={site.brand} fill sizes="200px" className="object-contain" priority />
+        <Image src={rel} alt={site.brand} fill sizes="240px" className="object-contain" priority />
       </span>
     );
   }

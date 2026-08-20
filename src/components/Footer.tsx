@@ -10,7 +10,7 @@ export default function Footer() {
       <Container className="py-16">
         <div className="grid gap-10 md:grid-cols-[1.3fr_1fr_1fr]">
           <div className="max-w-sm">
-            <Logo variant="white" className="h-12 w-32" />
+            <Logo variant="white" className="h-16 w-48" />
             <p className="mt-2 text-[11px] uppercase tracking-[0.3em] text-paper/60">
               {site.tagline}
             </p>
